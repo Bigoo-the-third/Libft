@@ -6,7 +6,7 @@
 /*   By: qmoreau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 19:41:29 by qmoreau           #+#    #+#             */
-/*   Updated: 2021/12/15 13:34:37 by qmoreau          ###   ########.fr       */
+/*   Updated: 2021/12/19 11:59:08 by qmoreau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,15 +80,25 @@ char	**ft_split(char const *s, char c)
 {
 	char	**tab;
 	int		i;
+	int		j;
 
 	if (!s)
 		return (NULL);
 	tab = malloc(sizeof(*tab) * (comptword((char *)s, c) + 1));
 	if (!tab)
+	{
+		free(tab);
 		return (NULL);
+	}
 	i = splitv2(tab, s, c);
 	if (i == -1)
+	{
+		j = 0;
+		while (tab[j])
+			free(tab[j++]);
+		free(tab);
 		return (NULL);
+	}
 	tab[i] = 0;
 	return (tab);
 }
